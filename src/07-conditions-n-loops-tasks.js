@@ -438,8 +438,27 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let firstPath = pathes[0];
+  let commonPathTemplate = '';
+
+  for (let i = 1; i < pathes.length; i += 1) {
+    for (let j = 0; j < pathes[i].length; j += 1) {
+      if (firstPath[j] === pathes[i][j]) {
+        commonPathTemplate += firstPath[j];
+      } else {
+        break;
+      }
+    }
+
+    firstPath = commonPathTemplate;
+    if (i !== pathes.length - 1) commonPathTemplate = '';
+  }
+
+  const lastIndexSlah = commonPathTemplate.lastIndexOf('/');
+  const commonPath = commonPathTemplate.slice(0, lastIndexSlah + 1);
+
+  return commonPath;
 }
 
 
@@ -461,8 +480,26 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const resMatrix = [];
+
+  for (let i = 0; i < m1.length; i += 1) { // по строкам 1 матрицы
+    const matrixRow = [];
+
+    for (let j = 0; j < m2[0].length; j += 1) { // по столбцам 2 матрицы
+      let x = 0;
+
+      for (let n = 0; n < m2.length; n += 1) { // по элементам столбца 2 матрицы
+        x += m1[i][n] * m2[n][j];
+      }
+
+      matrixRow.push(x);
+    }
+
+    resMatrix.push(matrixRow);
+  }
+
+  return resMatrix;
 }
 
 
